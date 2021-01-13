@@ -28,10 +28,10 @@ const AsyncPlugin = require("./async-plugin");
 const FileListPlugin = require("./filelist-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   devtool: false,
   plugins: [
-    new FileListPlugin({ filename: "list.md" }),
+    // new FileListPlugin({ filename: "list.md" }),
     new webpack.ProgressPlugin(),
     // new DonePlugin(),
     // new AsyncPlugin(0),
@@ -47,13 +47,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         include: [path.resolve(__dirname, "src")],
         use: [
-          {
-            loader: "banner-loader",
-            options: {
-              text: "xx",
-              filename: path.resolve(__dirname, "banner.js"),
-            },
-          },
+          "babel-loader",
+          // {
+          //   loader: "banner-loader",
+          //   options: {
+          //     text: "xx",
+          //     filename: path.resolve(__dirname, "banner.js"),
+          //   },
+          // },
           // {
           //   loader: path.resolve(__dirname, "my-loader"),
           //   options: {
@@ -97,20 +98,20 @@ module.exports = {
   },
 
   optimization: {
-    minimizer: [new TerserPlugin()],
+    // minimizer: [new TerserPlugin()],
+    usedExports: true,
+    // splitChunks: {
+    //   cacheGroups: {
+    //     vendors: {
+    //       priority: -10,
+    //       test: /[\\/]node_modules[\\/]/,
+    //     },
+    //   },
 
-    splitChunks: {
-      cacheGroups: {
-        vendors: {
-          priority: -10,
-          test: /[\\/]node_modules[\\/]/,
-        },
-      },
-
-      chunks: "async",
-      minChunks: 1,
-      minSize: 30000,
-      name: false,
-    },
+    //   chunks: "async",
+    //   minChunks: 1,
+    //   minSize: 30000,
+    //   name: false,
+    // },
   },
 };
